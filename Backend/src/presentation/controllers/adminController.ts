@@ -10,7 +10,7 @@ export class AdminController {
   }
 
   async adminLogin(req: Request, res: Response, next: NextFunction) {
-    console.log("admin login",req.body)
+    console.log("admin login","adfasdfasdfsadfasd")
     const result = await this.adminInteractor.logIn(req.body)
     if (result.success) {
         return res
@@ -19,6 +19,7 @@ export class AdminController {
       } else {
         return res.status(401).json({ status: false, message: result.message });
       }
+  
   }
 
 
@@ -30,6 +31,28 @@ export class AdminController {
         return res.status(200).json({status:true, data:result });  
     } catch (error) {
       next(error);
+    }
+  }
+
+  async blockUser(req: Request, res: Response, next: NextFunction){
+    const result = await this.adminInteractor.blockUser(req.body.email)
+    if (result.success) {
+      return res
+        .status(200)
+        .json({ status: true, message:'User successfully blocked'});
+    } else {
+      return res.status(401).json({ status: false, message: result.message });
+    }
+  }
+
+  async unblockUser(req: Request, res: Response, next: NextFunction){
+    const result = await this.adminInteractor.unblockUser(req.body.email)
+    if (result.success) {
+      return res
+        .status(200)
+        .json({ status: true, message:'User successfully unblocked'});
+    } else {
+      return res.status(401).json({ status: false, message: result.message });
     }
   }
 }

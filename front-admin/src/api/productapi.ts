@@ -14,6 +14,28 @@ class ProductApi{
           return error;
         }
       }
+    async bulkAddProduct(data:FormData): Promise<any> {
+        try {
+          return await this.axiosInstance.post('/api/products/product/bulk',data,{
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            }});
+        } catch (error: unknown) {
+         
+          return error;
+        }
+      }
+    async updateProductImage(productId:string,data:FormData,index:number): Promise<any> {
+        try {
+          return await this.axiosInstance.patch(`/api/products/product/update-img?productId=${productId}&index=${index}`,data,{
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            }});
+        } catch (error: unknown) {
+         
+          return error;
+        }
+      }
     async updateProduct(data:any,ProductId:string): Promise<any> {
         try {
 
@@ -23,9 +45,9 @@ class ProductApi{
           return error;
         }
       }
-    async fetchAllProducts(): Promise<any> {
+    async fetchAllProducts(page:number,limit:number): Promise<any> {
         try {
-          return await this.axiosInstance.get('/api/products/product');
+          return await this.axiosInstance.get(`/api/products/product?page=${page}&limit=${limit}`);
         } catch (error: unknown) {
          
           return error;
@@ -33,7 +55,7 @@ class ProductApi{
       }
     async deleteProduct(id:string): Promise<any> {
         try {
-          return await this.axiosInstance.patch(`/api/products/product/:${id}`);
+          return await this.axiosInstance.patch(`/api/products/product/delete/${id}`);
         } catch (error: unknown) {
          
           return error;
@@ -43,6 +65,15 @@ class ProductApi{
         try {
             
           return await this.axiosInstance.get(`/api/products/product/${id}`);
+        } catch (error: unknown) {
+         
+          return error;
+        }
+      }
+      async listingProduct(id:string,action:string): Promise<any> {
+        try {
+    
+          return await this.axiosInstance.patch(`/api/products/product/${id}?action=${action}`);
         } catch (error: unknown) {
          
           return error;

@@ -1,13 +1,16 @@
+import mongoose from 'mongoose';
 import {subCategoryCreationDTo,subCategoryDTo} from '../../domain/dtos/SubCategoryDTO'
-import {resposeHandler} from '../../types/commonTypes'
+import {LargeDataFetch, responseHandler} from '../../types/commonTypes'
 export default interface IsubCategoryInteractor {
-  addCategory(data: subCategoryCreationDTo): Promise<subCategoryDTo | resposeHandler>;
-  getAllCategories(): Promise<subCategoryDTo[]>;
-  getListedCategories(mainCategoryId:string): Promise<subCategoryDTo[]>;
-  getCategoryById(id: string): Promise<subCategoryDTo | null>;
-  updateCategory(id: string, data: Partial<subCategoryCreationDTo>): Promise<subCategoryDTo | null |resposeHandler>;
-  deleteCategory(id: string): Promise<boolean>; 
-  listById(id: string): Promise<resposeHandler | null>; 
-  unListById(id: string): Promise<resposeHandler | null>; 
+  addCategory(data: subCategoryCreationDTo): Promise<subCategoryDTo | responseHandler>;
+  getAllCategories(limit:number,page:number): Promise<LargeDataFetch>;
+  getListedCategories(mainCategoryId:mongoose.Types.ObjectId,page:number,limit:number ): Promise<LargeDataFetch>;
+  getCategoryById(id: mongoose.Types.ObjectId): Promise<subCategoryDTo | null>;
+  updateCategory(id: mongoose.Types.ObjectId, data: Partial<subCategoryCreationDTo>): Promise<subCategoryDTo | null |responseHandler>;
+  deleteCategory(id: mongoose.Types.ObjectId): Promise<boolean>; 
+  listById(id: mongoose.Types.ObjectId): Promise<responseHandler | null>; 
+  unListById(id: mongoose.Types.ObjectId): Promise<responseHandler | null>; 
+  
   
 }
+
